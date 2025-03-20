@@ -9,12 +9,30 @@ load_dotenv()
 ai_helper_blueprint = Blueprint("ai_helper", __name__)
 
 DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
-if not DEEPSEEK_API_KEY:
-    print("Warning: DEEPSEEK_API_KEY environment variable not set")
 
 def get_openai_client():
-    """Creates OpenAI client with Deepseek params"""
-    return OpenAI(api_key=DEEPSEEK_API_KEY, base_url="https://api.deepseek.com")
+    """Retrieves OpenAI client using the API key from Flask config."""
+    api_key = os.environ.get("DEEPSEEK_API_KEY")
+    if not api_key:
+        raise ValueError("Missing OpenAI API Key")
+    return OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
+
+def generate_response(system_prompt, user_prompt):
+    """Helper function to generate AI responses using DeepSeek Chat API."""
+    try:
+        client = get_openai_client()
+        response = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            stream=False
+        )
+        return response.choices[0].message.content, None
+    except Exception as error:  # noqa: W0718 (Still catching general exceptions)
+        current_app.logger.error("Unexpected AI Model Error: %s", str(error))
+        return None, "An unexpected error occurred."
 
 def generate_study_guide(data):
     """Generate a study guide using the DeepSeek API."""
