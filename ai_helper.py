@@ -8,7 +8,9 @@ load_dotenv()
 
 ai_helper_blueprint = Blueprint("ai_helper", __name__)
 
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "sk-2baac3856127425998a967f88ff10c59")
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
+if not DEEPSEEK_API_KEY:
+    print("Warning: DEEPSEEK_API_KEY environment variable not set")
 
 def get_openai_client():
     """Creates OpenAI client with Deepseek params"""
@@ -20,6 +22,10 @@ def generate_study_guide(data):
     unit = data.get('unit', 'Unknown')
     year = data.get('year', 'College')
     details = data.get('details', '')
+
+    # Check if API key is available
+    if not DEEPSEEK_API_KEY:
+        return None, "API key not configured. Please set the DEEPSEEK_API_KEY environment variable."
 
     system_prompt = (
         "You are a professional study guide creator. You create detailed, well-structured study guides for students. "
