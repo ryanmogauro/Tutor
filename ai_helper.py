@@ -35,7 +35,6 @@ def generate_study_guide(data):
         "Use plain text formatting with clear section headers and bullet points."
         "Use bullet points with '- ' for main points and '   - ' for sub-points (with three spaces before the dash)."
         "Number lists as '1. ', '2. ', etc."
-        "This exact formatting is critical as it will be used to generate a PDF document."
     )
 
     user_prompt = (

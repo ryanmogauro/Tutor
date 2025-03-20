@@ -3,9 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultContainer = document.getElementById('resultContainer');
     const studyGuideContent = document.getElementById('studyGuideContent');
     const loadingElement = document.getElementById('loading');
-    const downloadBtn = document.getElementById('downloadBtn');
-    
-    let currentFilename = null;
     
     // Form submission handler
     studyGuideForm.addEventListener('submit', function(e) {
@@ -16,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
         studyGuideContent.style.display = 'none';
         loadingElement.style.display = 'flex';
         loadingElement.querySelector('p').textContent = 'Generating your study guide...';
-        downloadBtn.style.display = 'none';
         
         // Collect form data
         const formData = {
@@ -50,13 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
             // Hide loading, show content
             loadingElement.style.display = 'none';
             studyGuideContent.style.display = 'block';
-            downloadBtn.style.display = 'block';
             
             // Display the generated study guide
             studyGuideContent.textContent = data.content;
-            
-            // Store the filename for download
-            currentFilename = data.filename;
             
             // Add futuristic typing effect
             applyTypingEffect(studyGuideContent, data.content);
@@ -86,25 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 studyGuideContent.parentNode.appendChild(retryButton);
             }, 2000);
         });
-    });
-    
-    // Download button handler
-    downloadBtn.addEventListener('click', function() {
-        if (currentFilename) {
-            window.location.href = `/download/${currentFilename}`;
-            
-            // Add visual feedback for the download
-            const originalText = downloadBtn.textContent;
-            downloadBtn.textContent = "Downloading...";
-            downloadBtn.style.backgroundColor = "var(--primary-blue)";
-            downloadBtn.style.color = "white";
-            
-            setTimeout(() => {
-                downloadBtn.textContent = originalText;
-                downloadBtn.style.backgroundColor = "";
-                downloadBtn.style.color = "";
-            }, 2000);
-        }
     });
     
     // Futuristic typing effect function
