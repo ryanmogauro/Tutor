@@ -1,6 +1,6 @@
 """Helper module for AI-powered study guide generation."""
 import os
-from flask import Blueprint
+from flask import Blueprint, current_app
 from openai import OpenAI
 from dotenv import load_dotenv
 
