@@ -26,7 +26,7 @@ jobs:
       
       - name: Run Pylint
         run: |
-          cd Tutor && pylint *.py --exit-zero
+          pylint *.py --exit-zero
       
       - name: Run Tests with Environment Setup
         run: |
