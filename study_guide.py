@@ -23,6 +23,7 @@ def handle_generate_study_guide():
         if not success or not study_guide:
             return jsonify({"success": False, "error": error or "Failed to generate study guide"}), 500
 
+        # Directly return the study guide content as text
         return jsonify({"success": True, "content": study_guide})
 
     except Exception as e:
