@@ -42,7 +42,7 @@ def generate_study_guide(data):
     year = data.get('year', 'College')
     details = data.get('details', '')
 
-    # Check if API key is available
+    DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
     if not DEEPSEEK_API_KEY:
         return None, "API key not configured. Please set the DEEPSEEK_API_KEY environment variable."
 
