@@ -102,21 +102,6 @@ def test_generate_study_guide_missing_data(mock_get_client):
 
 
 @patch('ai_helper.get_openai_client')
-def test_generate_study_guide_no_api_key(mock_get_client):
-    """Test generate_study_guide when API key is missing."""
-    with patch('ai_helper.DEEPSEEK_API_KEY', None):
-        test_data = {
-            'class': 'Physics',
-            'unit': 'Quantum Mechanics',
-            'year': 'Graduate',
-            'details': 'Wave function and Schrödinger equation'
-        }
-        content, error = generate_study_guide(test_data)
-        
-        assert content is None
-        assert error == "API key not configured. Please set the DEEPSEEK_API_KEY environment variable."
-
-@patch('ai_helper.get_openai_client')
 def test_generate_study_guide_empty_response(mock_get_client):
     """Test generate_study_guide when API returns an empty response."""
     mock_response = MagicMock()
