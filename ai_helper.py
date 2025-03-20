@@ -8,7 +8,7 @@ load_dotenv()
 
 ai_helper_blueprint = Blueprint("ai_helper", __name__)
 
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
+
 
 def get_openai_client():
     """Retrieves OpenAI client using the API key from Flask config."""
@@ -19,6 +19,7 @@ def get_openai_client():
 
 def generate_response(system_prompt, user_prompt):
     """Helper function to generate AI responses using DeepSeek Chat API."""
+    DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY")
     try:
         client = get_openai_client()
         response = client.chat.completions.create(
